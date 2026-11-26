@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Revisões Escolares • Portal Interativo</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  
+  <!-- Fontes do Google -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap');
+    
+    body { font-family: 'Nunito', sans-serif; }
+    h1, h2, h3, .fun-font { font-family: 'Fredoka', cursive, sans-serif; }
+    .roman-font { font-family: 'Cinzel', serif; }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.65rem;
+    }
+    .branch-card, .topic-card {
+      transition: all 0.2s ease-in-out;
+    }
+    .branch-card:hover, .topic-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+    .bounce-gentle {
+      animation: bounce 3s infinite ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen pb-16">
+
+  <!-- ======================================================== -->
+  <!-- BARRA DE NAVEGAÇÃO SUPERIOR FIXA (SELETOR DE REVISÕES)  -->
+  <!-- ======================================================== -->
+  <nav class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-700 shadow-lg px-4 py-3">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Logo do Portal -->
+      <div class="flex items-center gap-2 cursor-pointer" onclick="switchReview('hub')">
+        <span class="text-2xl">🎒</span>
+        <div>
+          <span class="font-black text-sm md:text-base tracking-wide text-amber-400 block leading-tight">
+            PORTAL DO ALUNO
+          </span>
+          <span class="text-[10px] text-slate-400 font-semibold block leading-tight">
+            Central de Estudos & Mapas Mentais
+          </span>
+        </div>
+      </div>
+
+      <!-- Seletor Rápido de Matéria (Botoes de Navegação) -->
+      <div class="flex items-center gap-1.5 md:gap-2 flex-wrap">
+        <button onclick="switchReview('hub')" id="nav-hub" class="px-3 py-1.5 rounded-xl text-xs md:text-sm font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 transition flex items-center gap-1.5">
+          <span>🏠</span> <span class="hidden sm:inline">Menu Geral</span>
+        </button>
+        <button onclick="switchReview('geo')" id="nav-geo" class="px-3 py-1.5 rounded-xl text-xs md:text-sm font-bold bg-emerald-600 text-white hover:bg-emerald-500 shadow transition flex items-center gap-1.5">
+          <span>🌎</span> <span>Geografia (6º Ano)</span>
+        </button>
+        <button onclick="switchReview('hist')" id="nav-hist" class="px-3 py-1.5 rounded-xl text-xs md:text-sm font-bold bg-amber-600 text-white hover:bg-amber-500 shadow transition flex items-center gap-1.5">
+          <span>🏛️</span> <span>História (Macedônia & Roma)</span>
+        </button>
+      </div>
+
+      <!-- Indicador de Status / Total de Revisões -->
+      <div class="hidden lg:flex items-center gap-2">
+        <span class="badge bg-slate-800 text-emerald-400 border border-slate-700">
+          ● 2 Revisões Prontas
+        </span>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ======================================================== -->
+  <!-- VISTA 1: MENU PRINCIPAL / HUB INICIAL                   -->
+  <!-- ======================================================== -->
+  <section id="view-hub" class="max-w-6xl mx-auto px-4 pt-8 md:pt-12 space-y-8">
+    
+    <!-- Hero Banner do Hub -->
+    <div class="text-center max-w-3xl mx-auto space-y-3">
+      <span class="badge bg-indigo-100 text-indigo-800 border border-indigo-200 uppercase font-black tracking-widest">
+        📚 Escolha uma matéria para estudar
+      </span>
+      <h1 class="text-3xl md:text-5xl font-black text-slate-900">
+        Qual conteúdo você quer revisar hoje?
+      </h1>
+      <p class="text-sm md:text-base text-slate-600">
+        Todos os resumos contêm esquemas visuais, ilustrações coloridas, fichas rápidas para prova e mapas mentais explicados passo a passo.
+      </p>
+    </div>
+
+    <!-- Grade dos Cartões das Matérias -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-4">
+      
+      <!-- Cartão: Geografia -->
+      <div onclick="switchReview('geo')" class="group cursor-pointer bg-white rounded-3xl p-6 md:p-8 border-2 border-emerald-200 hover:border-emerald-500 shadow-md hover:shadow-xl transition flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-100 rounded-full opacity-40 group-hover:scale-125 transition duration-300"></div>
+        
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-4xl p-3 bg-emerald-50 rounded-2xl">🌎</span>
+            <span class="badge bg-emerald-100 text-emerald-800 font-bold">6º ANO FUNDAMENTAL</span>
+          </div>
+
+          <h2 class="text-2xl font-black text-emerald-950 mb-2 group-hover:text-emerald-700 transition">
+            Geografia: Biomas & Relevo
+          </h2>
+          <p class="text-xs md:text-sm text-slate-600 mb-6 leading-relaxed">
+            Estrutura da Terra, Tectônica de Placas, Curvas de Nível (íngreme vs. plano), Perfil Topográfico e os <strong>6 Biomas Brasileiros</strong> (Amazônia, Cerrado, Mata Atlântica, Caatinga, Pantanal e Pampa).
+          </p>
+
+          <div class="space-y-2 text-xs text-slate-700 mb-6">
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-500 font-bold">✔</span> Mapas conceituais com desenhos de curvas de nível
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-500 font-bold">✔</span> Guia dos 6 biomas e seus produtos (açaí, mel, etc.)
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-500 font-bold">✔</span> Flashcards com pegadinhas de teste
+            </div>
+          </div>
+        </div>
+
+        <button class="w-full py-3 bg-emerald-600 group-hover:bg-emerald-700 text-white rounded-2xl font-bold text-sm shadow transition flex items-center justify-center gap-2">
+          <span>Estudar Geografia</span> <span>➡️</span>
+        </button>
+      </div>
+
+      <!-- Cartão: História -->
+      <div onclick="switchReview('hist')" class="group cursor-pointer bg-white rounded-3xl p-6 md:p-8 border-2 border-amber-300 hover:border-amber-600 shadow-md hover:shadow-xl transition flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-100 rounded-full opacity-40 group-hover:scale-125 transition duration-300"></div>
+        
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-4xl p-3 bg-amber-50 rounded-2xl">🏛️</span>
+            <span class="badge bg-amber-100 text-amber-900 font-bold">HISTÓRIA ANTIGA</span>
+          </div>
+
+          <h2 class="text-2xl font-black text-amber-950 mb-2 group-hover:text-amber-800 transition">
+            Império Macedônico & Roma Antiga
+          </h2>
+          <p class="text-xs md:text-sm text-slate-600 mb-6 leading-relaxed">
+            Alexandre, o Grande, Cultura Helenística, Origens de Roma, República (Patrícios vs. Plebeus), Guerras Púnicas, Júlio César, Coliseu, Cristianismo, Crise do Escravismo e o Reino Franco.
+          </p>
+
+          <div class="space-y-2 text-xs text-slate-700 mb-6">
+            <div class="flex items-center gap-2">
+              <span class="text-amber-600 font-bold">✔</span> Ciência helenística e Farol de Alexandria
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-amber-600 font-bold">✔</span> Linha do tempo: Monarquia, República e Império
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-amber-600 font-bold">✔</span> Esquema completo do Coliseu e Batalhas
+            </div>
+          </div>
+        </div>
+
+        <button class="w-full py-3 bg-amber-700 group-hover:bg-amber-800 text-white rounded-2xl font-bold text-sm shadow transition flex items-center justify-center gap-2">
+          <span>Estudar História</span> <span>➡️</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Dica para Professores -->
+    <div class="max-w-4xl mx-auto bg-slate-200/80 rounded-2xl p-4 text-center text-xs text-slate-600">
+      💡 <strong>Dica para a turma:</strong> Use a barra no topo para alternar entre as matérias a qualquer momento sem perder o seu progresso!
+    </div>
+
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- VISTA 2: REVISÃO DE GEOGRAFIA (6º ANO)                   -->
+  <!-- ======================================================== -->
+  <div id="view-geo" class="hidden max-w-6xl mx-auto px-2 md:px-4 pt-6">
+<!-- Header Banner -->
+  <header class="max-w-6xl mx-auto mb-8 text-center bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
+    <!-- Background Decorator SVGs -->
+    <svg class="absolute -right-8 -bottom-8 w-44 h-44 opacity-15 text-white" viewBox="0 0 100 100" fill="currentColor">
+      <circle cx="50" cy="50" r="45" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M10,50 Q30,20 50,50 T90,50" fill="none" stroke="white" stroke-width="2"/>
+      <path d="M50,5 A45,45 0 0,0 50,95 A45,45 0 0,1 50,5" fill="none" stroke="white" stroke-width="2"/>
+    </svg>
+
+    <div class="relative z-10 flex flex-col items-center">
+      <span class="badge bg-amber-400 text-amber-950 px-3 py-1 mb-2 tracking-wide uppercase shadow-sm">
+        🎒 6th Grade Test Prep • Illustrated Mind Map
+      </span>
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-sm">
+        🌎 Geography Adventure Map 🗺️
+      </h1>
+      <p class="text-emerald-100 text-sm md:text-base max-w-2xl font-semibold">
+        Everything from your Canva slides: <span class="text-amber-300 font-bold">Earth & Landforms</span>, <span class="text-amber-300 font-bold">Topography Tools</span>, and the <span class="text-amber-300 font-bold">6 Brazilian Biomes</span>!
+      </p>
+      
+      <!-- Interactive Tab Buttons -->
+      <div class="flex flex-wrap justify-center gap-2 mt-5">
+        <button onclick="filterSection('all')" id="btn-all" class="filter-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-white text-emerald-800 shadow transition">
+          🌟 Complete Mind Map
+        </button>
+        <button onclick="filterSection('earth')" id="btn-earth" class="filter-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-emerald-800/50 hover:bg-white hover:text-emerald-800 text-white transition">
+          🏔️ 1. Earth & Landforms
+        </button>
+        <button onclick="filterSection('topo')" id="btn-topo" class="filter-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-emerald-800/50 hover:bg-white hover:text-emerald-800 text-white transition">
+          📐 2. Topography Tools
+        </button>
+        <button onclick="filterSection('biomes')" id="btn-biomes" class="filter-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-emerald-800/50 hover:bg-white hover:text-emerald-800 text-white transition">
+          🌿 3. Brazilian Biomes
+        </button>
+        <button onclick="filterSection('cheatsheet')" id="btn-cheatsheet" class="filter-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-400 text-slate-900 hover:bg-amber-300 transition">
+          ⚡ 5-Minute Test Flashcards
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-6xl mx-auto space-y-10">
+
+    <!-- MIND MAP CENTER & BRANCHES VISUAL -->
+    <div id="mind-map-view" class="space-y-10">
+
+      <!-- ========================================== -->
+      <!-- BRANCH 1: THE EARTH & LANDFORMS -->
+      <!-- ========================================== -->
+      <section id="section-earth" class="bg-sky-50/70 border-2 border-sky-200 rounded-3xl p-6 md:p-8 shadow-sm">
+        <!-- Branch Header -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-4 mb-6 border-b-2 border-sky-200">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-2xl shadow-md">
+              🌍
+            </div>
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Branch 1 • Slide 3</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-sky-950">The Earth & Natural Landforms</h2>
+            </div>
+          </div>
+          <span class="badge bg-sky-100 text-sky-800 border border-sky-300">
+            "How our planet is built!"
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Card 1.1: Earth's 3 Ingredients -->
+          <div class="branch-card bg-white rounded-2xl p-5 border border-sky-100 shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-bold text-slate-800">1. Earth's Big Trio</h3>
+                <span class="text-2xl">🌐</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-4">
+                The Earth's surface sustains life and makes our weather through 3 main parts:
+              </p>
+              
+              <!-- Mini Drawing: Earth's Spheres -->
+              <div class="bg-sky-50 rounded-xl p-3 mb-4 flex items-center justify-center">
+                <svg class="w-36 h-28" viewBox="0 0 160 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Atmosphere Ring -->
+                  <circle cx="80" cy="55" r="48" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 2" fill="#e0f2fe" fill-opacity="0.3"/>
+                  <!-- Globe base -->
+                  <circle cx="80" cy="55" r="40" fill="#0284c7"/>
+                  <!-- Continents (Land) -->
+                  <path d="M65 30 Q75 35 70 50 Q60 60 75 75 Q85 65 95 60 Q105 55 100 40 Q90 35 80 25 Z" fill="#22c55e"/>
+                  <path d="M50 55 Q55 65 60 75 Q50 85 45 75 Z" fill="#22c55e"/>
+                  <!-- Cloud (Atmosphere) -->
+                  <g class="bounce-gentle">
+                    <ellipse cx="110" cy="30" rx="14" ry="7" fill="white" opacity="0.9"/>
+                    <circle cx="104" cy="27" r="7" fill="white" opacity="0.9"/>
+                    <circle cx="114" cy="27" r="6" fill="white" opacity="0.9"/>
+                  </g>
+                  <!-- Labels -->
+                  <text x="80" y="103" text-anchor="middle" font-size="8" font-weight="bold" fill="#0369a1">Land + Water + Air</text>
+                </svg>
+              </div>
+
+              <ul class="space-y-2 text-xs text-slate-700">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-emerald-500 font-bold">🌱 Land:</span> Continents & islands where we live.
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-sky-500 font-bold">🌊 Water:</span> Oceans, rivers, and lakes.
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-indigo-400 font-bold">☁️ Atmosphere:</span> The blanket of gas that gives us weather.
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 italic">
+              ⭐ Everything works together to support living things!
+            </div>
+          </div>
+
+          <!-- Card 1.2: Tectonic Plates -->
+          <div class="branch-card bg-white rounded-2xl p-5 border border-sky-100 shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-bold text-slate-800">2. Tectonic Plates</h3>
+                <span class="text-2xl">🧩</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3">
+                Earth's crust is like a cracked eggshell! These giant rock slabs are always creeping and bumping.
+              </p>
+
+              <!-- Mini Drawing: Plates colliding into a mountain -->
+              <div class="bg-amber-50 rounded-xl p-3 mb-4 flex items-center justify-center">
+                <svg class="w-48 h-28" viewBox="0 0 180 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Plate Left -->
+                  <path d="M15 75 L65 75 L80 60 L60 85 L15 85 Z" fill="#92400e"/>
+                  <text x="35" y="95" font-size="8" font-weight="bold" fill="#78350f">Plate A ➡️</text>
+                  <!-- Plate Right -->
+                  <path d="M165 75 L115 75 L100 60 L120 85 L165 85 Z" fill="#b45309"/>
+                  <text x="145" y="95" text-anchor="end" font-size="8" font-weight="bold" fill="#78350f">⬅️ Plate B</text>
+                  <!-- Crushed collision Mountain rising -->
+                  <polygon points="90,25 70,75 110,75" fill="#15803d"/>
+                  <polygon points="90,25 82,45 98,45" fill="#f8fafc"/> <!-- Snow peak -->
+                  <polygon points="105,40 90,75 125,75" fill="#166534"/>
+                  <!-- Collision sparkles / arrows -->
+                  <path d="M60 40 L70 50" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M120 40 L110 50" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+                  <text x="90" y="15" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e293b">Mountain Formed!</text>
+                </svg>
+              </div>
+
+              <div class="bg-amber-50 border-l-4 border-amber-400 p-2.5 rounded-r-lg text-xs text-amber-900 space-y-1">
+                <p><strong>💥 Collide:</strong> When they smash, rocks buckle upwards into tall mountain ranges!</p>
+                <p><strong>⏳ Erosion:</strong> Wind and rain slowly wear down rocks over millions of years.</p>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 italic">
+              ⭐ Tectonics builds land up; erosion carves it out!
+            </div>
+          </div>
+
+          <!-- Card 1.3: The 5 Big Landforms -->
+          <div class="branch-card bg-white rounded-2xl p-5 border border-sky-100 shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-bold text-slate-800">3. Famous Landforms</h3>
+                <span class="text-2xl">⛰️</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3">
+                Natural shapes of the land created by movement and erosion:
+              </p>
+
+              <!-- Quick visual Landforms -->
+              <div class="space-y-2 text-xs">
+                <div class="flex items-center gap-2 p-1.5 bg-slate-50 rounded-lg">
+                  <span class="text-base">🏔️</span>
+                  <div>
+                    <strong class="text-slate-800">Mountain:</strong> Very tall, pointed rocky peaks.
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 p-1.5 bg-slate-50 rounded-lg">
+                  <span class="text-base">🥪</span>
+                  <div>
+                    <strong class="text-slate-800">Plateau (Planalto):</strong> High up, but flat on top like a table!
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 p-1.5 bg-slate-50 rounded-lg">
+                  <span class="text-base">🏞️</span>
+                  <div>
+                    <strong class="text-slate-800">Valley:</strong> Deep low dip between hills, often has a river.
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 p-1.5 bg-slate-50 rounded-lg">
+                  <span class="text-base">🌾</span>
+                  <div>
+                    <strong class="text-slate-800">Plains:</strong> Wide, flat, low open ground.
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 p-1.5 bg-slate-50 rounded-lg">
+                  <span class="text-base">🏜️</span>
+                  <div>
+                    <strong class="text-slate-800">Desert:</strong> Very dry with sand dunes or bare rock.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-500 italic">
+              ⭐ Why they matter: Habitats for animals & control local climate!
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BRANCH 2: TOPOGRAPHY & ELEVATION TOOLS -->
+      <!-- ========================================== -->
+      <section id="section-topo" class="bg-indigo-50/70 border-2 border-indigo-200 rounded-3xl p-6 md:p-8 shadow-sm">
+        <!-- Branch Header -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-4 mb-6 border-b-2 border-indigo-200">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl shadow-md">
+              📐
+            </div>
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Branch 2 • Slides 3, 4 & 5</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-indigo-950">Topography: Mapping the 3D World</h2>
+            </div>
+          </div>
+          <span class="badge bg-indigo-100 text-indigo-800 border border-indigo-300">
+            "How we show hills on flat paper!"
+          </span>
+        </div>
+
+        <!-- Definition Box -->
+        <div class="bg-white rounded-2xl p-4 md:p-5 border border-indigo-100 shadow mb-6 flex flex-col md:flex-row items-center gap-4">
+          <div class="p-3 bg-indigo-100 text-indigo-700 rounded-xl text-3xl shrink-0">
+            🧭
+          </div>
+          <div class="text-xs md:text-sm text-slate-700">
+            <p class="font-bold text-indigo-900 text-sm md:text-base mb-1">
+              What is Topography?
+            </p>
+            The study of the physical features of Earth's surface — including <strong>NATURAL</strong> features (mountains, valleys, rivers) and <strong>ARTIFICIAL</strong> human-made features (roads, bridges, cities). 
+            <span class="text-rose-600 font-semibold block mt-1">
+              ⚠️ Regular flat road maps can't show if a path goes up a steep cliff or stays flat. That's why we need topography tools!
+            </span>
+          </div>
+        </div>
+
+        <!-- 3 Pillars of Topography Tools -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- Card 2.1: Contour Lines (Crucial 6th grade test concept) -->
+          <div class="branch-card bg-white rounded-2xl p-5 border border-indigo-100 shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-base font-bold text-indigo-950">1. Contour Lines (Curvas de Nível)</h3>
+                <span class="badge bg-rose-100 text-rose-700 font-bold text-[10px]">TEST FAVORITE!</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3">
+                Lines on a map that connect points of <strong>the exact same height (elevation)</strong>.
+              </p>
+
+              <!-- Drawing: Mountain vs Contour Map -->
+              <div class="bg-indigo-50/50 rounded-xl p-3 mb-3 flex flex-col items-center">
+                <svg class="w-full h-36" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Side View Mountain (Top half) -->
+                  <text x="10" y="15" font-size="8" font-weight="bold" fill="#475569">SIDE VIEW OF HILL:</text>
+                  <!-- Steep Left Slope, Gentle Right Slope -->
+                  <path d="M20 50 L60 20 L180 50 Z" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
+                  <line x1="60" y1="20" x2="60" y2="50" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+                  <text x="63" y="28" font-size="7" fill="#ef4444" font-weight="bold">Peak: 300m</text>
+                  <text x="25" y="38" font-size="7" fill="#b91c1c" font-weight="bold">Steep Cliff! 🧗</text>
+                  <text x="120" y="38" font-size="7" fill="#15803d" font-weight="bold">Gentle Slope 🚶</text>
+
+                  <line x1="10" y1="58" x2="190" y2="58" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 3"/>
+
+                  <!-- Top-Down Contour Map (Bottom half) -->
+                  <text x="10" y="70" font-size="8" font-weight="bold" fill="#475569">MAP CONTOUR VIEW:</text>
+                  <!-- Outer ring 100m -->
+                  <ellipse cx="100" cy="98" rx="80" ry="25" stroke="#6366f1" stroke-width="1.5" fill="#f8fafc"/>
+                  <!-- Middle ring 200m (crowded left, wide right) -->
+                  <ellipse cx="80" cy="98" rx="55" ry="18" stroke="#4f46e5" stroke-width="1.5" fill="#e0e7ff"/>
+                  <!-- Peak ring 300m -->
+                  <ellipse cx="65" cy="98" rx="25" ry="10" stroke="#3730a3" stroke-width="1.5" fill="#c7d2fe"/>
+                  <text x="65" y="100" text-anchor="middle" font-size="7" font-weight="bold" fill="#312e81">300m</text>
+
+                  <!-- Labels pointing to spacing -->
+                  <path d="M30 98 L20 115" stroke="#dc2626" stroke-width="1"/>
+                  <text x="18" y="124" font-size="7" font-weight="bold" fill="#dc2626">Lines CLOSE = STEEP</text>
+
+                  <path d="M140 98 L150 115" stroke="#16a34a" stroke-width="1"/>
+                  <text x="135" y="124" font-size="7" font-weight="bold" fill="#16a34a">Lines FAR = FLAT</text>
+                </svg>
+              </div>
+
+              <div class="bg-indigo-50 p-2.5 rounded-xl text-xs space-y-1 text-indigo-950 font-medium">
+                <p>🔴 <strong>Lines close together</strong> = STEEP hill or cliff!</p>
+                <p>🟢 <strong>Lines far apart</strong> = FLAT or gentle slope!</p>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 text-[11px] text-slate-500">
+              💡 Hikers use this so they don't accidentally hike off a cliff!
+            </div>
+          </div>
+
+          <!-- Card 2.2: Map Visual Aids (Tinting, Shading, Symbols, Labels) -->
+          <div class="branch-card bg-white rounded-2xl p-5 border border-indigo-100 shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-base font-bold text-indigo-950">2. Map Visual Effects</h3>
+                <span class="text-2xl">🎨</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3">
+                Slide 4 shows the 4 ways mapmakers make terrain pop:
+              </p>
+
+              <div class="space-y-3 text-xs">
+                <!-- Tinting -->
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                  <div class="flex items-center justify-between font-bold text-slate-800 mb-1">
+                    <span>🌈 Tinting (Colors)</span>
+                    <div class="flex h-3 w-16 rounded overflow-hidden">
+                      <div class="w-1/3 bg-green-500" title="Low"></div>
+                      <div class="w-1/3 bg-amber-500" title="Mid"></div>
+                      <div class="w-1/3 bg-rose-800" title="High"></div>
+                    </div>
+                  </div>
+                  <p class="text-slate-600 text-[11px]">
+                    Colors show elevation. <strong>Darker / warmer colors</strong> = high peaks; <strong>lighter / greens</strong> = low lands & coasts.
+                  </p>
+                </div>
+
+                <!-- Shading -->
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                  <div class="font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                    <span>🌓 Shading (Shadows)</span>
+                  </div>
+                  <p class="text-slate-600 text-[11px]">
+                    Mimics sunlight shining from one side so you see shadows in valleys, making hills look 3D.
+                  </p>
+                </div>
+
+                <!-- Symbols & Labels -->
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                  <div class="font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                    <span>🔣 Symbols & 🏷️ Labels</span>
+                  </div>
+                  <p class="text-slate-600 text-[11px]">
+                    <strong>Symbols:</strong> Special lines for valleys or flat lines for plateaus. <br>
+                    <strong>Labels:</strong> Real names like "Amazon River" or "Pico da Neblina".
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 text-[11px] text-slate-500">
+              💡 Helps anyone read the map at a single glance!
+            </div>
+          </div>
+
+          <!-- Card 2.3: 3D Models (Profile & Block Diagram) -->
+          <div class="branch-card bg-white rounded-2xl p-5 border border-indigo-100 shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-base font-bold text-indigo-950">3. Slicing the Earth</h3>
+                <span class="badge bg-emerald-100 text-emerald-800 font-bold text-[10px]">Slide 5</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-3">
+                Two smart ways scientists "cut into" the ground to see inside:
+              </p>
+
+              <!-- Mini Drawing: Topographic Profile & Cake Slice -->
+              <div class="bg-indigo-50/50 rounded-xl p-3 mb-3 flex flex-col items-center">
+                <svg class="w-full h-36" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Cake Slice (Block Diagram) -->
+                  <g transform="translate(10, 10)">
+                    <!-- Top surface -->
+                    <polygon points="40,10 90,0 60,25 10,35" fill="#86efac"/>
+                    <!-- Mountain on top -->
+                    <polygon points="35,18 48,5 55,22" fill="#22c55e"/>
+                    <!-- Front cut side -->
+                    <polygon points="10,35 60,25 60,55 10,65" fill="#b45309"/>
+                    <!-- Right cut side -->
+                    <polygon points="60,25 90,0 90,30 60,55" fill="#78350f"/>
+                    <text x="50" y="75" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#78350f">🍰 Block Diagram ("Cake Slice")</text>
+                    <text x="50" y="84" text-anchor="middle" font-size="6.5" fill="#475569">Shows Length, Width & Height in 3D</text>
+                  </g>
+
+                  <!-- Topographic Profile (Side Line) -->
+                  <g transform="translate(115, 15)">
+                    <!-- Axes -->
+                    <line x1="5" y1="5" x2="5" y2="55" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="5" y1="55" x2="75" y2="55" stroke="#64748b" stroke-width="1.5"/>
+                    <!-- Elevation curve -->
+                    <path d="M5 45 Q20 40 30 15 Q40 50 55 35 Q65 20 75 50" fill="none" stroke="#2563eb" stroke-width="2"/>
+                    <circle cx="30" cy="15" r="2.5" fill="#ef4444"/>
+                    <!-- Hiker icon -->
+                    <text x="32" y="14" font-size="9">🚴</text>
+                    <text x="40" y="70" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#1d4ed8">📐 Topographic Profile</text>
+                    <text x="40" y="79" text-anchor="middle" font-size="6.5" fill="#475569">Side "slice" of a bike/hiking trail</text>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="space-y-1.5 text-xs text-slate-700">
+                <div class="p-2 bg-slate-50 rounded-lg">
+                  <strong class="text-blue-700">Topographic Profile:</strong> A side-view graph showing how tall hills go along one specific trail or road.
+                </div>
+                <div class="p-2 bg-slate-50 rounded-lg">
+                  <strong class="text-amber-800">Block Diagram:</strong> A 3D "slice of cake" model showing how mountains, rocks, and valleys connect underneath!
+                </div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 text-[11px] text-slate-500">
+              💡 Engineers use these to plan bridges, tunnels, and safe towns!
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BRANCH 3: THE 6 BRAZILIAN BIOMES -->
+      <!-- ========================================== -->
+      <section id="section-biomes" class="bg-emerald-50/70 border-2 border-emerald-200 rounded-3xl p-6 md:p-8 shadow-sm">
+        <!-- Branch Header -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-4 mb-6 border-b-2 border-emerald-200">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-md">
+              🌿
+            </div>
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Branch 3 • Slide 2</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-emerald-950">The 6 Brazilian Biomes</h2>
+            </div>
+          </div>
+          <span class="badge bg-emerald-100 text-emerald-800 border border-emerald-300">
+            "Brazil's Amazing Living Ecosystems!"
+          </span>
+        </div>
+
+        <p class="text-xs md:text-sm text-slate-600 mb-6 max-w-3xl">
+          A <strong>biome</strong> is a large region with its own special climate, plants, and animals. Brazil has <strong>6 official biomes</strong>, each with super cool foods and wildlife:
+        </p>
+
+        <!-- 6 Biomes Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- 1. AMAZON FOREST -->
+          <div class="branch-card bg-white rounded-2xl p-5 border-2 border-emerald-300 shadow flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-emerald-100 rounded-full opacity-40"></div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge bg-emerald-600 text-white">1. LARGEST BIOME</span>
+                <span class="text-2xl">🌴</span>
+              </div>
+              <h3 class="text-xl font-bold text-emerald-950 mb-1">Amazon Forest</h3>
+              <p class="text-xs font-semibold text-emerald-700 mb-3">Tropical Rainforest & Floodplains</p>
+
+              <!-- Drawing: Amazon Rainforest Tree & Açaí -->
+              <div class="bg-emerald-50 rounded-xl p-2 mb-3 flex items-center justify-center">
+                <svg class="w-40 h-24" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Tall Rainforest Tree -->
+                  <rect x="75" y="45" width="10" height="40" fill="#78350f" rx="2"/>
+                  <!-- Foliage layers -->
+                  <circle cx="80" cy="40" r="28" fill="#15803d"/>
+                  <circle cx="65" cy="35" r="20" fill="#16a34a"/>
+                  <circle cx="95" cy="35" r="20" fill="#22c55e"/>
+                  <!-- Vines -->
+                  <path d="M72 45 Q65 60 70 75" stroke="#4ade80" stroke-width="2" fill="none"/>
+                  <!-- Açaí berry bunch -->
+                  <g transform="translate(115, 35)">
+                    <circle cx="6" cy="6" r="4" fill="#581c87"/>
+                    <circle cx="12" cy="8" r="4" fill="#3b0764"/>
+                    <circle cx="9" cy="14" r="4" fill="#581c87"/>
+                    <circle cx="15" cy="14" r="4" fill="#2e1065"/>
+                    <text x="10" y="28" text-anchor="middle" font-size="7" font-weight="bold" fill="#581c87">Açaí Berries!</text>
+                  </g>
+                  <!-- River curve -->
+                  <path d="M10 80 Q40 65 70 85 T150 75" stroke="#38bdf8" stroke-width="5" fill="none"/>
+                </svg>
+              </div>
+
+              <ul class="text-xs text-slate-700 space-y-1.5">
+                <li>🌱 <strong>Ecosystem:</strong> Dense tropical jungle, flooded rivers, and huge biodiversity.</li>
+                <li>🫐 <strong>Super Fruits & Nuts:</strong> Famous worldwide for <strong>açaí, guaraná, cupuaçu, Brazil nuts</strong>, and andiroba.</li>
+                <li>💚 <strong>Why it matters:</strong> Holds huge potential for sustainable green products.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-emerald-800 font-semibold">
+              ⭐ Key Word: Rainforest, Açaí & Biodiversity!
+            </div>
+          </div>
+
+          <!-- 2. CERRADO -->
+          <div class="branch-card bg-white rounded-2xl p-5 border-2 border-amber-300 shadow flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-amber-100 rounded-full opacity-40"></div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge bg-amber-500 text-slate-900">2. 2ND LARGEST</span>
+                <span class="text-2xl">🌾</span>
+              </div>
+              <h3 class="text-xl font-bold text-amber-950 mb-1">Cerrado</h3>
+              <p class="text-xs font-semibold text-amber-800 mb-3">The Brazilian Savanna</p>
+
+              <!-- Drawing: Twisted Tree & Pequi -->
+              <div class="bg-amber-50 rounded-xl p-2 mb-3 flex items-center justify-center">
+                <svg class="w-40 h-24" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Ground -->
+                  <rect x="0" y="70" width="160" height="20" fill="#fef08a"/>
+                  <!-- Savanna grass -->
+                  <path d="M15 70 L18 60 M22 70 L25 58 M30 70 L32 62 M120 70 L123 60 M135 70 L138 58" stroke="#ca8a04" stroke-width="2"/>
+                  <!-- Twisted characteristic Cerrado trunk -->
+                  <path d="M75 75 Q70 60 65 50 Q60 40 70 30 Q80 20 75 15" stroke="#78350f" stroke-width="6" stroke-linecap="round" fill="none"/>
+                  <path d="M68 45 Q80 40 90 35" stroke="#78350f" stroke-width="4" stroke-linecap="round" fill="none"/>
+                  <!-- Clustered leaves -->
+                  <circle cx="75" cy="15" r="14" fill="#65a30d"/>
+                  <circle cx="92" cy="35" r="12" fill="#84cc16"/>
+                  <!-- Sun with dry/rainy symbol -->
+                  <circle cx="135" cy="22" r="10" fill="#f59e0b"/>
+                  <text x="135" y="42" text-anchor="middle" font-size="7" font-weight="bold" fill="#b45309">Dry Winter / Wet Summer</text>
+                </svg>
+              </div>
+
+              <ul class="text-xs text-slate-700 space-y-1.5">
+                <li>📍 <strong>Location:</strong> Central Brazil plateaus and lowlands.</li>
+                <li>☀️ <strong>Climate:</strong> Very dry winters & rainy summers.</li>
+                <li>🥑 <strong>Native Treasures:</strong> <strong>Pequi, mangaba, jatobá, carnaúba, and babaçu</strong>.</li>
+                <li>🚜 <strong>Human Use:</strong> Massive area for agriculture and cattle raising.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-amber-800 font-semibold">
+              ⭐ Key Word: Savanna, Pequi & Central Plateau!
+            </div>
+          </div>
+
+          <!-- 3. ATLANTIC FOREST -->
+          <div class="branch-card bg-white rounded-2xl p-5 border-2 border-teal-300 shadow flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-teal-100 rounded-full opacity-40"></div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge bg-teal-600 text-white">3. WATER PROVIDER</span>
+                <span class="text-2xl">🌊</span>
+              </div>
+              <h3 class="text-xl font-bold text-teal-950 mb-1">Atlantic Forest</h3>
+              <p class="text-xs font-semibold text-teal-700 mb-3">Mata Atlântica (Coastline)</p>
+
+              <!-- Drawing: Coastline Hills & Water Drop -->
+              <div class="bg-teal-50 rounded-xl p-2 mb-3 flex items-center justify-center">
+                <svg class="w-40 h-24" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Ocean -->
+                  <path d="M0 65 Q40 55 80 65 T160 65 L160 90 L0 90 Z" fill="#38bdf8"/>
+                  <!-- Mountain coast (Serra do Mar) -->
+                  <path d="M0 65 Q30 20 60 45 Q90 15 120 50 Q140 35 160 60 L160 65 L0 65 Z" fill="#059669"/>
+                  <!-- Huge Water Drop Icon -->
+                  <g transform="translate(115, 10)">
+                    <path d="M15 0 C15 0 25 15 25 22 C25 28 20 33 15 33 C10 33 5 28 5 22 C5 15 15 0 15 0 Z" fill="#0284c7"/>
+                    <ellipse cx="12" cy="22" rx="3" ry="5" fill="#bae6fd" opacity="0.8"/>
+                    <text x="15" y="43" text-anchor="middle" font-size="7.5" font-weight="extrabold" fill="#0369a1">70% OF WATER!</text>
+                  </g>
+                </svg>
+              </div>
+
+              <ul class="text-xs text-slate-700 space-y-1.5">
+                <li>🏙️ <strong>Most Populated:</strong> Runs along the Atlantic coast where most major cities are located.</li>
+                <li>💧 <strong>Water Superpower:</strong> Provides <strong class="text-teal-800 font-extrabold">70% of Brazil's drinking water</strong>!</li>
+                <li>🧉 <strong>Famous Plant:</strong> Sustainable cultivation of <strong>yerba mate</strong> (chimarrão / mate tea).</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-teal-800 font-semibold">
+              ⭐ Key Word: Coast, 70% Water & Mate Tea!
+            </div>
+          </div>
+
+          <!-- 4. CAATINGA -->
+          <div class="branch-card bg-white rounded-2xl p-5 border-2 border-orange-300 shadow flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-orange-100 rounded-full opacity-40"></div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge bg-orange-500 text-white">4. SEMI-ARID DRYLAND</span>
+                <span class="text-2xl">🌵</span>
+              </div>
+              <h3 class="text-xl font-bold text-orange-950 mb-1">Caatinga</h3>
+              <p class="text-xs font-semibold text-orange-800 mb-3">Northeast Dry Region</p>
+
+              <!-- Drawing: Cactus & Little Bee -->
+              <div class="bg-orange-50 rounded-xl p-2 mb-3 flex items-center justify-center">
+                <svg class="w-40 h-24" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Ground -->
+                  <rect x="0" y="70" width="160" height="20" fill="#fed7aa"/>
+                  <!-- Saguaro / Mandacaru Cactus -->
+                  <g transform="translate(45, 15)">
+                    <!-- Main stem -->
+                    <rect x="25" y="15" width="12" height="45" fill="#15803d" rx="6"/>
+                    <!-- Left arm -->
+                    <path d="M25 40 L10 40 L10 25" stroke="#15803d" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <!-- Right arm -->
+                    <path d="M37 35 L50 35 L50 20" stroke="#15803d" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <!-- Cactus flower -->
+                    <circle cx="31" cy="14" r="3" fill="#ef4444"/>
+                  </g>
+                  <!-- Native Bee -->
+                  <g transform="translate(105, 20)" class="bounce-gentle">
+                    <!-- Wings -->
+                    <ellipse cx="12" cy="8" rx="6" ry="10" fill="#bae6fd" opacity="0.8" transform="rotate(-20 12 8)"/>
+                    <!-- Body -->
+                    <ellipse cx="14" cy="14" rx="9" ry="7" fill="#facc15"/>
+                    <!-- Stripes -->
+                    <line x1="12" y1="7" x2="12" y2="21" stroke="#1e293b" stroke-width="2"/>
+                    <line x1="16" y1="7" x2="16" y2="21" stroke="#1e293b" stroke-width="2"/>
+                    <text x="14" y="32" text-anchor="middle" font-size="7" font-weight="bold" fill="#7c2d12">Prized Honey! 🍯</text>
+                  </g>
+                </svg>
+              </div>
+
+              <ul class="text-xs text-slate-700 space-y-1.5">
+                <li>☀️ <strong>Climate:</strong> Semi-arid, very low rainfall, and low humidity.</li>
+                <li>🐝 <strong>Native Bees & Prized Honey:</strong> Famous for native stingless bees producing some of the sweetest, purest honey in the world!</li>
+                <li>🌿 <strong>Plants:</strong> Medicinal herbs, fibrous plants, and drought-resistant fruit crops.</li>
+                <li>👨‍🌾 <strong>People:</strong> Driven by small, hardworking family farms.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-orange-800 font-semibold">
+              ⭐ Key Word: Semi-Arid, Cacti & Native Bee Honey!
+            </div>
+          </div>
+
+          <!-- 5. PANTANAL -->
+          <div class="branch-card bg-white rounded-2xl p-5 border-2 border-cyan-300 shadow flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-cyan-100 rounded-full opacity-40"></div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge bg-cyan-600 text-white">5. GIANT FLOODPLAIN</span>
+                <span class="text-2xl">🐊</span>
+              </div>
+              <h3 class="text-xl font-bold text-cyan-950 mb-1">Pantanal</h3>
+              <p class="text-xs font-semibold text-cyan-800 mb-3">Paraguay River Wetlands</p>
+
+              <!-- Drawing: Wetlands, Water Lily & Caiman -->
+              <div class="bg-cyan-50 rounded-xl p-2 mb-3 flex items-center justify-center">
+                <svg class="w-40 h-24" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Water base -->
+                  <rect x="0" y="35" width="160" height="55" fill="#67e8f9" opacity="0.6"/>
+                  <!-- Reeds -->
+                  <line x1="20" y1="80" x2="25" y2="20" stroke="#047857" stroke-width="3"/>
+                  <line x1="28" y1="80" x2="30" y2="25" stroke="#047857" stroke-width="2.5"/>
+                  <line x1="140" y1="80" x2="135" y2="20" stroke="#047857" stroke-width="3"/>
+                  <!-- Giant Water Lily (Vitória Régia) -->
+                  <ellipse cx="65" cy="55" rx="22" ry="10" fill="#15803d" stroke="#166534" stroke-width="1.5"/>
+                  <circle cx="65" cy="55" r="4" fill="#f43f5e"/>
+                  <!-- Friendly Alligator / Caiman eyes peeking -->
+                  <g transform="translate(95, 45)">
+                    <ellipse cx="20" cy="15" rx="18" ry="6" fill="#14532d"/>
+                    <circle cx="12" cy="10" r="4" fill="#166534"/>
+                    <circle cx="12" cy="10" r="1.5" fill="#facc15"/>
+                    <circle cx="20" cy="10" r="4" fill="#166534"/>
+                    <circle cx="20" cy="10" r="1.5" fill="#facc15"/>
+                    <text x="20" y="30" text-anchor="middle" font-size="7" font-weight="bold" fill="#065f46">UNESCO Wetland</text>
+                  </g>
+                </svg>
+              </div>
+
+              <ul class="text-xs text-slate-700 space-y-1.5">
+                <li>🌊 <strong>Wetlands:</strong> The Paraguay River floodplains make it the world's largest freshwater wetland!</li>
+                <li>🏛️ <strong>UNESCO World Heritage:</strong> Incredible mix of wildlife from the Amazon and Cerrado.</li>
+                <li>🤝 <strong>Sustainable Living:</strong> Indigenous communities & WWF Brazil work together producing organic beef, medicinal goods, and honey.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-cyan-800 font-semibold">
+              ⭐ Key Word: Wetlands, Floods, Caimans & UNESCO!
+            </div>
+          </div>
+
+          <!-- 6. PAMPA -->
+          <div class="branch-card bg-white rounded-2xl p-5 border-2 border-lime-300 shadow flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-lime-100 rounded-full opacity-40"></div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge bg-lime-600 text-white">6. SOUTHERN GRASSLANDS</span>
+                <span class="text-2xl">🍇</span>
+              </div>
+              <h3 class="text-xl font-bold text-lime-950 mb-1">The Pampa</h3>
+              <p class="text-xs font-semibold text-lime-800 mb-3">Rolling Fields & Gaucho Culture</p>
+
+              <!-- Drawing: Rolling hills, cattle & grapes -->
+              <div class="bg-lime-50 rounded-xl p-2 mb-3 flex items-center justify-center">
+                <svg class="w-40 h-24" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Gentle rolling hills -->
+                  <path d="M0 60 Q40 40 80 55 T160 45 L160 90 L0 90 Z" fill="#84cc16"/>
+                  <path d="M0 70 Q50 55 100 68 T160 60 L160 90 L0 90 Z" fill="#65a30d"/>
+                  <!-- Little cow silhouette -->
+                  <g transform="translate(30, 42)">
+                    <rect x="8" y="10" width="16" height="10" fill="#1e293b" rx="2"/>
+                    <rect x="6" y="6" width="6" height="7" fill="#1e293b" rx="1"/>
+                    <line x1="9" y1="20" x2="9" y2="26" stroke="#1e293b" stroke-width="2"/>
+                    <line x1="12" y1="20" x2="12" y2="26" stroke="#1e293b" stroke-width="2"/>
+                    <line x1="20" y1="20" x2="20" y2="26" stroke="#1e293b" stroke-width="2"/>
+                    <line x1="23" y1="20" x2="23" y2="26" stroke="#1e293b" stroke-width="2"/>
+                  </g>
+                  <!-- Grapes bunch -->
+                  <g transform="translate(105, 30)">
+                    <circle cx="8" cy="8" r="3.5" fill="#7c3aed"/>
+                    <circle cx="14" cy="8" r="3.5" fill="#6d28d9"/>
+                    <circle cx="11" cy="13" r="3.5" fill="#7c3aed"/>
+                    <circle cx="11" cy="18" r="3.5" fill="#5b21b6"/>
+                    <path d="M11 5 L11 0" stroke="#15803d" stroke-width="2"/>
+                    <text x="12" y="30" text-anchor="middle" font-size="7" font-weight="bold" fill="#4c1d95">Grapes & Wine</text>
+                  </g>
+                </svg>
+              </div>
+
+              <ul class="text-xs text-slate-700 space-y-1.5">
+                <li>📍 <strong>Location:</strong> Southern tip of Brazil (Rio Grande do Sul).</li>
+                <li>🥩 <strong>Economy:</strong> Famous for cattle raising and organic grain farming.</li>
+                <li>🍇 <strong>European Immigrants:</strong> Italian and German settlers brought new farming methods, making world-class <strong>grape juice and sparkling wines</strong>!</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-lime-800 font-semibold">
+              ⭐ Key Word: South, Grasslands, Cattle & Grapes!
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 5-MINUTE TEST PREP CHEAT SHEET -->
+    <!-- ========================================== -->
+    <section id="section-cheatsheet" class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-amber-200">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500 text-slate-900 flex items-center justify-center text-2xl shadow-md">
+          ⚡
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-800">Exam Ready in 5 Minutes</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-amber-950">Quick-Study Flashcards & Test Traps</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Flashcard 1 -->
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-rose-600 mb-1">
+              <span>TRICK QUESTION #1</span>
+              <span>Contour Lines</span>
+            </div>
+            <p class="font-bold text-slate-800 text-sm mb-2">
+              ❓ What does it mean when contour lines are close together vs. far apart?
+            </p>
+            <p class="text-xs text-slate-700 bg-amber-50 p-2.5 rounded-lg border-l-4 border-amber-400">
+              💡 <strong>Close together:</strong> The land is STEEP (like a cliff or tall peak). <br>
+              💡 <strong>Far apart:</strong> The land is FLAT or a gentle easy walk.
+            </p>
+          </div>
+        </div>
+
+        <!-- Flashcard 2 -->
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-rose-600 mb-1">
+              <span>TRICK QUESTION #2</span>
+              <span>Water Biome</span>
+            </div>
+            <p class="font-bold text-slate-800 text-sm mb-2">
+              ❓ Which biome provides 70% of Brazil's drinking water?
+            </p>
+            <p class="text-xs text-slate-700 bg-teal-50 p-2.5 rounded-lg border-l-4 border-teal-500">
+              💡 <strong>Atlantic Forest (Mata Atlântica)!</strong> Even though it's where most big cities are built, its rivers and springs provide 70% of the nation's water.
+            </p>
+          </div>
+        </div>
+
+        <!-- Flashcard 3 -->
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-rose-600 mb-1">
+              <span>TRICK QUESTION #3</span>
+              <span>3D Models</span>
+            </div>
+            <p class="font-bold text-slate-800 text-sm mb-2">
+              ❓ What's the difference between a Topographic Profile and a Block Diagram?
+            </p>
+            <p class="text-xs text-slate-700 bg-indigo-50 p-2.5 rounded-lg border-l-4 border-indigo-400">
+              💡 <strong>Profile:</strong> A 2D side-view line showing elevation changes along a single trail. <br>
+              💡 <strong>Block Diagram:</strong> A 3D "slice of cake" model showing length, width, and height together.
+            </p>
+          </div>
+        </div>
+
+        <!-- Flashcard 4 -->
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-rose-600 mb-1">
+              <span>TRICK QUESTION #4</span>
+              <span>Biomes Match-Up</span>
+            </div>
+            <p class="font-bold text-slate-800 text-sm mb-2">
+              ❓ Which biome is famous for native stingless bee honey and cacti?
+            </p>
+            <p class="text-xs text-slate-700 bg-orange-50 p-2.5 rounded-lg border-l-4 border-orange-400">
+              💡 <strong>Caatinga!</strong> The semi-arid dry biome of Northeast Brazil has native bees that make prized, delicious honey.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    function filterSection(section) {
+      const earth = document.getElementById('section-earth');
+      const topo = document.getElementById('section-topo');
+      const biomes = document.getElementById('section-biomes');
+      const cheat = document.getElementById('section-cheatsheet');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      // Reset button styles
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-white', 'text-emerald-800', 'bg-amber-400', 'text-slate-900');
+        btn.classList.add('bg-emerald-800/50', 'text-white');
+      });
+
+      if (section === 'all') {
+        earth.classList.remove('hidden');
+        topo.classList.remove('hidden');
+        biomes.classList.remove('hidden');
+        cheat.classList.remove('hidden');
+        document.getElementById('btn-all').classList.add('bg-white', 'text-emerald-800');
+        document.getElementById('btn-all').classList.remove('bg-emerald-800/50', 'text-white');
+      } else if (section === 'earth') {
+        earth.classList.remove('hidden');
+        topo.classList.add('hidden');
+        biomes.classList.add('hidden');
+        cheat.classList.add('hidden');
+        document.getElementById('btn-earth').classList.add('bg-white', 'text-emerald-800');
+      } else if (section === 'topo') {
+        earth.classList.add('hidden');
+        topo.classList.remove('hidden');
+        biomes.classList.add('hidden');
+        cheat.classList.add('hidden');
+        document.getElementById('btn-topo').classList.add('bg-white', 'text-emerald-800');
+      } else if (section === 'biomes') {
+        earth.classList.add('hidden');
+        topo.classList.add('hidden');
+        biomes.classList.remove('hidden');
+        cheat.classList.add('hidden');
+        document.getElementById('btn-biomes').classList.add('bg-white', 'text-emerald-800');
+      } else if (section === 'cheatsheet') {
+        earth.classList.add('hidden');
+        topo.classList.add('hidden');
+        biomes.classList.add('hidden');
+        cheat.classList.remove('hidden');
+        document.getElementById('btn-cheatsheet').classList.add('bg-amber-400', 'text-slate-900');
+      }
+    }
+  </script>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- VISTA 3: REVISÃO DE HISTÓRIA (MACEDÔNIA E ROMA)          -->
+  <!-- ======================================================== -->
+  <div id="view-hist" class="hidden max-w-6xl mx-auto px-2 md:px-4 pt-6">
+<!-- Header Banner com Estilo Histórico -->
+  <header class="max-w-6xl mx-auto mb-8 bg-gradient-to-r from-red-900 via-amber-900 to-indigo-950 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden border-2 border-amber-600/40">
+    <div class="relative z-10 flex flex-col items-center text-center">
+      <span class="badge bg-amber-400 text-amber-950 px-3 py-1 mb-2 uppercase tracking-widest font-black shadow-sm">
+        🏛️ História Antiga • Material Didático Completo
+      </span>
+      <h1 class="text-3xl md:text-5xl font-black tracking-wide mb-2 text-amber-200 drop-shadow">
+        DO IMPÉRIO MACEDÔNICO À QUEDA DE ROMA
+      </h1>
+      <p class="text-amber-100 text-sm md:text-base max-w-3xl font-medium">
+        Alexandre, o Grande • Cultura Helenística • Monarquia, República e Império Romano • Crise do Escravismo • Invasões Bárbaras e o Reino Franco
+      </p>
+
+      <!-- Navegação Rápida entre Módulos -->
+      <div class="flex flex-wrap justify-center gap-2 mt-6">
+        <button onclick="showSection('all')" id="btn-all" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-400 text-slate-900 shadow">
+          🌟 Tudo Completo
+        </button>
+        <button onclick="showSection('macedonia')" id="btn-macedonia" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-950/70 text-amber-200 hover:bg-amber-400 hover:text-slate-900 transition">
+          ⚔️ 1. Macedônia & Alexandre
+        </button>
+        <button onclick="showSection('helenismo')" id="btn-helenismo" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-950/70 text-amber-200 hover:bg-amber-400 hover:text-slate-900 transition">
+          💡 2. Cultura Helenística
+        </button>
+        <button onclick="showSection('origens-roma')" id="btn-origens-roma" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-950/70 text-amber-200 hover:bg-amber-400 hover:text-slate-900 transition">
+          🐺 3. Origens & Monarquia
+        </button>
+        <button onclick="showSection('republica')" id="btn-republica" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-950/70 text-amber-200 hover:bg-amber-400 hover:text-slate-900 transition">
+          ⚖️ 4. República & Conflitos
+        </button>
+        <button onclick="showSection('imperio')" id="btn-imperio" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-950/70 text-amber-200 hover:bg-amber-400 hover:text-slate-900 transition">
+          👑 5. Império Romano & Coliseu
+        </button>
+        <button onclick="showSection('crise-barbaros')" id="btn-crise-barbaros" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-amber-950/70 text-amber-200 hover:bg-amber-400 hover:text-slate-900 transition">
+          🛡️ 6. Crise, Bárbaros & Francos
+        </button>
+        <button onclick="showSection('simulado')" id="btn-simulado" class="nav-btn px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-rose-600 text-white hover:bg-rose-500 transition">
+          🎯 Questões de Prova
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto space-y-10">
+
+    <!-- ======================================================== -->
+    <!-- PARTE 1: IMPÉRIO MACEDÔNICO & ALEXANDRE O GRANDE -->
+    <!-- ======================================================== -->
+    <section id="sec-macedonia" class="bg-white border-2 border-amber-300 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-amber-200">
+        <div class="w-12 h-12 rounded-2xl bg-amber-600 text-white flex items-center justify-center text-2xl shadow">
+          ⚔️
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Módulo 1</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-amber-950">Império Macedônico: Filipe II e Alexandre, o Grande</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Cartão 1: A Macedônia e Filipe II -->
+        <div class="topic-card bg-amber-50/50 rounded-2xl p-5 border border-amber-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-lg font-bold text-amber-950">1. A Ascensão com Filipe II</h3>
+              <span class="text-2xl">👑</span>
+            </div>
+            <p class="text-xs text-slate-700 mb-3 leading-relaxed">
+              Os macedônios viviam ao norte da Grécia, praticavam agricultura e pastoreio e tinham como capital <strong>Pela</strong>. Embora falassem língua aparentada e tivessem costumes comuns, os gregos os viam como estrangeiros ("bárbaros").
+            </p>
+            
+            <!-- Desenho SVG: Falange e Moeda Divina -->
+            <div class="bg-white rounded-xl p-3 mb-3 border border-amber-100 flex items-center justify-center">
+              <svg class="w-44 h-24" viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Moeda de Zeus / Héracles -->
+                <circle cx="50" cy="50" r="32" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
+                <circle cx="50" cy="50" r="27" fill="#fef9c3"/>
+                <path d="M42 42 Q50 35 58 42 T50 62 Z" fill="#b45309"/>
+                <text x="50" y="75" text-anchor="middle" font-size="7" font-weight="bold" fill="#854d0e">Moeda com Zeus</text>
+                <!-- Lanças da Falange Macedônica -->
+                <line x1="100" y1="85" x2="165" y2="25" stroke="#78350f" stroke-width="2.5"/>
+                <line x1="105" y1="90" x2="170" y2="30" stroke="#78350f" stroke-width="2.5"/>
+                <line x1="110" y1="95" x2="175" y2="35" stroke="#78350f" stroke-width="2.5"/>
+                <polygon points="165,25 163,29 169,27" fill="#dc2626"/>
+                <polygon points="170,30 168,34 174,32" fill="#dc2626"/>
+                <polygon points="175,35 173,39 179,37" fill="#dc2626"/>
+                <text x="135" y="90" text-anchor="middle" font-size="7" font-weight="bold" fill="#991b1b">Falange e Sarissas</text>
+              </svg>
+            </div>
+
+            <ul class="text-xs text-slate-700 space-y-1.5">
+              <li>• <strong>Origem Divina:</strong> Filipe II cunhava moedas com Zeus e Héracles para legitimar o poder real.</li>
+              <li>• <strong>Aproveitou a Crise Grega:</strong> A Grécia estava enfraquecida pela <em>Guerra do Peloponeso</em> (disputa entre Esparta e Atenas).</li>
+              <li>• <strong>Batalha de Queroneia (338 a.C.):</strong> Derrotou Tebas e Atenas e criou a <strong>Liga de Corinto</strong>, unindo as cidades sob seu comando para atacar a Pérsia.</li>
+              <li>• <strong>Morte:</strong> Foi assassinado em 336 a.C. por Pausânias, passando o trono ao jovem Alexandre.</li>
+            </ul>
+          </div>
+          <div class="mt-3 pt-2 border-t border-amber-200 text-[11px] text-amber-800 font-bold">
+            💡 Queroneia (338 a.C.) marcou o fim da independência das pólis gregas!
+          </div>
+        </div>
+
+        <!-- Cartão 2: Alexandre e sua Formação -->
+        <div class="topic-card bg-amber-50/50 rounded-2xl p-5 border border-amber-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-lg font-bold text-amber-950">2. A Formação do Conquistador</h3>
+              <span class="text-2xl">🧠</span>
+            </div>
+            <p class="text-xs text-slate-700 mb-3 leading-relaxed">
+              Nascido em Pela (356 a.C.), filho de Filipe II e da rainha Olímpia. Destacou-se como cavaleiro e estrategista genial desde a juventude.
+            </p>
+
+            <div class="bg-white rounded-xl p-3 mb-3 border border-amber-100 flex items-center justify-center">
+              <svg class="w-44 h-24" viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Pórtico de Aristóteles (Peripatos) -->
+                <rect x="25" y="25" width="130" height="10" fill="#e2e8f0" stroke="#64748b"/>
+                <line x1="35" y1="35" x2="35" y2="85" stroke="#94a3b8" stroke-width="4"/>
+                <line x1="65" y1="35" x2="65" y2="85" stroke="#94a3b8" stroke-width="4"/>
+                <line x1="95" y1="35" x2="95" y2="85" stroke="#94a3b8" stroke-width="4"/>
+                <line x1="125" y1="35" x2="125" y2="85" stroke="#94a3b8" stroke-width="4"/>
+                <line x1="150" y1="35" x2="150" y2="85" stroke="#94a3b8" stroke-width="4"/>
+                <!-- Rolo de Papiro e Livro -->
+                <rect x="70" y="50" width="40" height="25" fill="#fef3c7" stroke="#d97706" rx="3"/>
+                <text x="90" y="66" text-anchor="middle" font-size="7" font-weight="bold" fill="#78350f">Liceu de Aristóteles</text>
+                <text x="90" y="93" text-anchor="middle" font-size="6.5" fill="#475569">"Caminhar e Aprender" (Peripatéticos)</text>
+              </svg>
+            </div>
+
+            <ul class="text-xs text-slate-700 space-y-1.5">
+              <li>• <strong>Aluno de Aristóteles:</strong> O grande filósofo ensinou-lhe botânica, medicina, filosofia, mitologia e o amor pela poesia de Homero (Ilíada).</li>
+              <li>• <strong>Escola Peripatética:</strong> Aristóteles ensinava passeando sob pórticos (<em>peripatos</em>).</li>
+              <li>• <strong>Revolta em Tebas:</strong> Ao assumir o poder com quase 20 anos, cidades gregas tentaram se rebelar. Alexandre destruiu Tebas para dar exemplo, mas <em>poupou a casa do poeta Píndaro</em>.</li>
+              <li>• <strong>Esparta de Fora:</strong> Apenas Esparta recusou fazer parte da aliança macedônica.</li>
+            </ul>
+          </div>
+          <div class="mt-3 pt-2 border-t border-amber-200 text-[11px] text-amber-800 font-bold">
+            💡 Alexandre unia a força guerreira à paixão pelo saber grego!
+          </div>
+        </div>
+
+        <!-- Cartão 3: A Conquista da Pérsia e o Fim -->
+        <div class="topic-card bg-amber-50/50 rounded-2xl p-5 border border-amber-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-lg font-bold text-amber-950">3. A Grande Marcha na Ásia</h3>
+              <span class="text-2xl">🗺️</span>
+            </div>
+            <p class="text-xs text-slate-700 mb-3 leading-relaxed">
+              Com cerca de 40 mil soldados, Alexandre enfrentou o gigantesco Império Persa governado por <strong>Dario III</strong>.
+            </p>
+
+            <div class="space-y-2 text-xs text-slate-700 mb-3">
+              <div class="p-2 bg-white rounded-lg border border-amber-100">
+                <strong>🌊 Batalha do Rio Grânico (334 a.C.):</strong> Ataque surpresa fulminante que abriu as portas da Ásia Menor.
+              </div>
+              <div class="p-2 bg-white rounded-lg border border-amber-100">
+                <strong>👑 Respeito aos Vencidos:</strong> Dario III fugiu, mas Alexandre acolheu a rainha e princesas persas com honras reais.
+              </div>
+              <div class="p-2 bg-white rounded-lg border border-amber-100">
+                <strong>⚡ Domínio Completo (331 a.C.):</strong> Tomou Síria, Fenícia (Tiro), Egito (onde fundou Alexandria) e derrotou definitivamente Dario III em Gaugamela/Arbelos.
+              </div>
+              <div class="p-2 bg-white rounded-lg border border-amber-100">
+                <strong>💀 Morte na Babilônia (323 a.C.):</strong> Vítima de febre aos 32 anos (quase 33), sem deixar herdeiro preparado.
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 pt-2 border-t border-amber-200 text-[11px] text-rose-800 font-bold">
+            Divisão do Império entre os Generais: Ptolomeu (Egito), Seleuco (Ásia) e Antígono (Macedônia).
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 2: A CULTURA HELENÍSTICA -->
+    <!-- ======================================================== -->
+    <section id="sec-helenismo" class="bg-white border-2 border-indigo-200 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-indigo-200">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl shadow">
+          💡
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Módulo 2</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-indigo-950">A Cultura Helenística: Fusão do Ocidente com o Oriente</h2>
+        </div>
+      </div>
+
+      <!-- Definição Central -->
+      <div class="bg-indigo-50/70 border-l-4 border-indigo-500 p-4 rounded-r-2xl mb-6">
+        <h3 class="font-bold text-indigo-950 text-sm md:text-base mb-1">
+          O que foi o Helenismo?
+        </h3>
+        <p class="text-xs md:text-sm text-slate-700 leading-relaxed">
+          É a <strong>fusão da cultura grega (hélade) com as culturas orientais (persa, egípcia e mesopotâmica)</strong>. Alexandre estimulou essa fusão incentivando <strong>casamentos mistos</strong> entre seus generais e mulheres persas, uniformizando a moeda para impulsionar o comércio internacional e fundando cidades de estilo grego (como Alexandria no Egito).
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- 1. O Farol e a Cidade de Alexandria -->
+        <div class="topic-card bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-indigo-950">O Farol de Alexandria</h3>
+              <span class="badge bg-amber-100 text-amber-800">7 Maravilhas</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-3">
+              Erguido na Ilha de Faros por <strong>Sóstrato de Cnido</strong> (cerca de 280 a.C.) sob os reis Ptolomeu I e II.
+            </p>
+
+            <!-- Desenho do Farol de Alexandria -->
+            <div class="bg-white rounded-xl p-3 mb-3 border border-slate-200 flex items-center justify-center">
+              <svg class="w-36 h-36" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Água do mar -->
+                <path d="M0 115 C30 110 60 120 120 115 L120 130 L0 130 Z" fill="#38bdf8"/>
+                <!-- Base Quadrangular -->
+                <polygon points="30,115 90,115 82,75 38,75" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+                <!-- Seção Octogonal -->
+                <polygon points="42,75 78,75 74,40 46,40" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+                <!-- Seção Circular Superior -->
+                <rect x="50" y="25" width="20" height="15" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+                <!-- Cúpula e Chama -->
+                <polygon points="60,10 52,25 68,25" fill="#94a3b8"/>
+                <!-- Fogo / Luz -->
+                <circle cx="60" cy="18" r="7" fill="#f59e0b"/>
+                <circle cx="60" cy="18" r="4" fill="#ef4444"/>
+                <!-- Raios de luz -->
+                <line x1="60" y1="18" x2="10" y2="5" stroke="#facc15" stroke-width="2" stroke-dasharray="3 2"/>
+                <line x1="60" y1="18" x2="110" y2="5" stroke="#facc15" stroke-width="2" stroke-dasharray="3 2"/>
+                <text x="60" y="125" text-anchor="middle" font-size="7" font-weight="bold" fill="#0369a1">130m de Altura (43 andares)</text>
+              </svg>
+            </div>
+
+            <ul class="text-xs text-slate-700 space-y-1">
+              <li>• <strong>Estrutura:</strong> Base quadrada, meio octogonal e topo circular com fogueira e espelho refletor.</li>
+              <li>• <strong>Origem da Palavra:</strong> O nome "farol" vem do nome da <em>Ilha de Faros</em>!</li>
+              <li>• <strong>Destruição:</strong> Terremotos sucessivos (especialmente em 1303). Suas ruínas foram usadas para a Fortaleza de Qaitbay.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. Cientistas Helenísticos -->
+        <div class="topic-card bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-indigo-950">Gênios da Ciência</h3>
+              <span class="text-2xl">🔭</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-3">
+              Alexandria reuniu os maiores pensadores na célebre Biblioteca e Museu:
+            </p>
+
+            <div class="space-y-2 text-xs text-slate-700">
+              <div class="p-1.5 bg-white rounded-lg border border-slate-100">
+                <strong>☀️ Aristarco:</strong> Criou a <em>teoria heliocêntrica</em> (o Sol no centro).
+              </div>
+              <div class="p-1.5 bg-white rounded-lg border border-slate-100">
+                <strong>🌍 Cláudio Ptolomeu:</strong> Formulou a <em>teoria geocêntrica</em> (Terra no centro, aceita na Idade Média).
+              </div>
+              <div class="p-1.5 bg-white rounded-lg border border-slate-100">
+                <strong>📏 Eratóstenes:</strong> Calculou a circunferência da Terra com incrível precisão e fixou o conceito de grau.
+              </div>
+              <div class="p-1.5 bg-white rounded-lg border border-slate-100">
+                <strong>📐 Euclides:</strong> Pai da geometria plana com sua obra <em>Elementos</em>.
+              </div>
+              <div class="p-1.5 bg-white rounded-lg border border-slate-100">
+                <strong>⚙️ Arquimedes:</strong> Princípio da alavanca ("Dê-me uma alavanca e moverei o mundo"), empuxo/flutuação e o <em>Parafuso de Arquimedes</em> para erguer água.
+              </div>
+              <div class="p-1.5 bg-white rounded-lg border border-slate-100">
+                <strong>🌙 Hiparco:</strong> Calculou a distância Terra-Lua e fez o primeiro mapa celeste.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Arte Helenística e Expansão na Ásia -->
+        <div class="topic-card bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-indigo-950">Artes e Expansão no Oriente</h3>
+              <span class="text-2xl">🗿</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-3">
+              Diferente da arte clássica (focada em serenidade perfeita), a arte helenística expressava <strong>emoção, realismo, movimento, violência e dor</strong>.
+            </p>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 mb-3 text-xs space-y-1">
+              <p><strong>Esculturas Famosas:</strong></p>
+              <p>• <em>Vênus de Milo</em></p>
+              <p>• <em>Vitória de Samotrácia</em></p>
+              <p>• <em>Laocoonte</em> (o sofrimento com as serpentes)</p>
+              <p>• <em>Apolo Belvedere</em></p>
+            </div>
+
+            <div class="p-2.5 bg-indigo-50 rounded-xl text-xs space-y-1">
+              <p class="font-bold text-indigo-900">🏛️ Marcas na Ásia (Báctria e Gandara):</p>
+              <p class="text-slate-700">
+                A arte grega chegou até o Afeganistão (cidade de <em>Ai-Khanoum</em>) e o Paquistão/Índia (reino de <em>Gandara</em>), onde <strong>a cabeça de Buda foi esculpida com traços do deus grego Apolo</strong>!
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 3: ORIGENS DE ROMA & MONARQUIA -->
+    <!-- ======================================================== -->
+    <section id="sec-origens-roma" class="bg-white border-2 border-red-200 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-red-200">
+        <div class="w-12 h-12 rounded-2xl bg-red-700 text-white flex items-center justify-center text-2xl shadow">
+          🐺
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-700">Módulo 3</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-red-950">Origens de Roma e o Período Monárquico (753 a.C. - 509 a.C.)</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Origem Lendária vs Histórica -->
+        <div class="topic-card bg-red-50/40 rounded-2xl p-5 border border-red-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-base font-bold text-red-950">1. As Duas Origens</h3>
+              <span class="text-2xl">📜</span>
+            </div>
+
+            <!-- Desenho: A Loba e os Gêmeos -->
+            <div class="bg-white rounded-xl p-3 mb-3 border border-red-100 flex items-center justify-center">
+              <svg class="w-44 h-24" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Rio Tibre -->
+                <path d="M0 75 Q40 68 80 75 T160 72" stroke="#38bdf8" stroke-width="4"/>
+                <!-- Silhueta da Loba amamentando -->
+                <path d="M35 35 Q45 20 60 25 Q70 20 85 28 L115 32 Q125 35 130 45 L125 65 L115 65 L115 50 L60 50 L55 65 L45 65 L42 45 Z" fill="#78350f"/>
+                <circle cx="38" cy="28" r="5" fill="#78350f"/>
+                <!-- Orelhas pontudas -->
+                <polygon points="35,24 38,15 42,24" fill="#78350f"/>
+                <!-- Gêmeos bebês -->
+                <circle cx="75" cy="62" r="5" fill="#fed7aa"/>
+                <circle cx="95" cy="62" r="5" fill="#fed7aa"/>
+                <text x="80" y="85" text-anchor="middle" font-size="7" font-weight="bold" fill="#991b1b">Rômulo e Remo amamentados pela Loba</text>
+              </svg>
+            </div>
+
+            <div class="space-y-2 text-xs text-slate-700">
+              <div class="p-2 bg-white rounded-lg border border-red-100">
+                <strong>Origem Lendária:</strong> Filhos do deus Marte com a princesa Réa Sílvia, jogados no Rio Tibre pelo tio usurpador Amúlio, salvos por uma loba e criados pelo pastor Fáustulo. Rômulo matou Remo e fundou Roma no Monte Palatino em <strong>753 a.C.</strong> (narrada na <em>Eneida</em> de Virgílio).
+              </div>
+              <div class="p-2 bg-white rounded-lg border border-red-100">
+                <strong>Origem Histórica:</strong> Fundação por pastores e agricultores <strong>latinos</strong> por volta de 2000 a 1000 a.C. na planície do Lácio, com posterior ocupação dos <strong>etruscos</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Povos Formadores e Herança Etrusca -->
+        <div class="topic-card bg-red-50/40 rounded-2xl p-5 border border-red-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-base font-bold text-red-950">2. Povos e Legado Etrusco</h3>
+              <span class="text-2xl">🏛️</span>
+            </div>
+            <p class="text-xs text-slate-700 mb-3">
+              A Península Itálica foi ocupada por vários povos: lígures, italiotas (latinos, sabinos, samnitas), gregos ao sul (<em>Magna Grécia</em>) e os <strong>etruscos</strong> na Etrúria.
+            </p>
+
+            <div class="p-3 bg-white rounded-xl border border-red-100 mb-3 text-xs space-y-2">
+              <p class="font-bold text-red-900">✨ O que os Romanos herdaram dos Etruscos?</p>
+              <p>• <strong>Arquitetura:</strong> O arco e a abóbada (permitiam grandes construções).</p>
+              <p>• <strong>Urbanismo:</strong> Ruas em traçado quadriculado (usado depois em acampamentos militares e cidades).</p>
+              <p>• <strong>Espetáculos:</strong> Os combates de gladiadores.</p>
+              <p>• <strong>Mulher etrusca:</strong> Tinha papel ativo e acesso à educação (diferente da mulher grega).</p>
+            </div>
+          </div>
+          <div class="text-[11px] text-slate-500 italic">
+            ⭐ Os etruscos formaram a Liga dos Doze Povos e dominaram Roma até 509 a.C.
+          </div>
+        </div>
+
+        <!-- Sociedade e Fim da Monarquia -->
+        <div class="topic-card bg-red-50/40 rounded-2xl p-5 border border-red-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-base font-bold text-red-950">3. Sociedade & Fim do Rei</h3>
+              <span class="text-2xl">👑🚫</span>
+            </div>
+
+            <div class="space-y-2 text-xs mb-3">
+              <div class="p-2 bg-amber-50 rounded-lg border border-amber-200">
+                <strong class="text-amber-950">Patrícios:</strong> Aristocratas nobres, donos das melhores terras, com plenos direitos políticos.
+              </div>
+              <div class="p-2 bg-blue-50 rounded-lg border border-blue-200">
+                <strong class="text-blue-950">Plebeus:</strong> Maioria (artesãos, comerciantes, camponeses). Pagavam impostos e lutavam, mas não tinham direitos políticos.
+              </div>
+              <div class="p-2 bg-slate-50 rounded-lg border border-slate-200">
+                <strong class="text-slate-900">Clientes:</strong> Dependentes protegidos pelos patrícios em troca de trabalho.
+              </div>
+              <div class="p-2 bg-rose-50 rounded-lg border border-rose-200">
+                <strong class="text-rose-950">Escravizados:</strong> Por dívidas ou prisioneiros de guerra.
+              </div>
+            </div>
+
+            <div class="bg-red-100 p-2.5 rounded-xl text-xs text-red-950">
+              <strong>O Golpe de 509 a.C.:</strong> O último dos 7 reis, <em>Tarquínio, o Soberbo</em> (etrusco), governava de forma despótica. Os patrícios no Senado deram um golpe, expulsaram o rei e <strong>fundaram a República</strong>!
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 4: REPÚBLICA ROMANA & LUTAS SOCIAIS -->
+    <!-- ======================================================== -->
+    <section id="sec-republica" class="bg-white border-2 border-emerald-300 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-emerald-200">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-700 text-white flex items-center justify-center text-2xl shadow">
+          ⚖️
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Módulo 4</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-emerald-950">República Romana (509 a.C. - 27 a.C.): Poder, Leis e Conquistas</h2>
+        </div>
+      </div>
+
+      <!-- Estrutura Política da República -->
+      <div class="bg-emerald-50/70 p-4 rounded-2xl mb-6 border border-emerald-200">
+        <h3 class="font-bold text-emerald-950 text-sm mb-2">🏛️ Organização Política Republicana (Controlada pelos Patrícios):</h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs">
+          <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+            <strong>2 Cônsules:</strong> Chefes do governo e exército (mandato de 1 ano; poder de veto mútuo).
+          </div>
+          <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+            <strong>Senado (300):</strong> Vitalício; controlava as finanças, política externa e leis.
+          </div>
+          <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+            <strong>Pretores:</strong> Administravam a Justiça e aplicação das leis.
+          </div>
+          <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+            <strong>Censores:</strong> Faziam o recenseamento e vigiavam a moral pública.
+          </div>
+          <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+            <strong>Questores & Edis:</strong> Finanças/impostos (questores) e policiamento/obras/festas (edis).
+          </div>
+        </div>
+        <div class="mt-2 text-[11px] text-emerald-900 font-semibold">
+          ⚡ <em>Ditador:</em> Em épocas de guerra ou emergência, o Senado nomeava um governante com plenos poderes por no máximo 6 meses.
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Lutas da Plebe (Monte Sagrado e Conquistas) -->
+        <div class="topic-card bg-white rounded-2xl p-5 border-2 border-emerald-200 shadow-sm">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-base font-bold text-emerald-950">A Luta da Plebe por Direitos</h3>
+            <span class="badge bg-emerald-600 text-white">Greve do Monte Sagrado</span>
+          </div>
+          <p class="text-xs text-slate-700 mb-3">
+            Como os plebeus formavam o exército e pagavam impostos, eles perceberam que Roma parava sem eles. Fizeram a <strong>Secessio Plebis</strong> (retiraram-se para o Monte Sagrado, deixando Roma indefesa):
+          </p>
+
+          <div class="space-y-2 text-xs">
+            <div class="p-2 bg-emerald-50 rounded-lg">
+              <strong>1. Tribuno da Plebe:</strong> Representante dos plebeus com poder de veto sobre leis dos patrícios e inviolabilidade física.
+            </div>
+            <div class="p-2 bg-emerald-50 rounded-lg">
+              <strong>2. Lei das Doze Tábuas (450 a.C.):</strong> Primeiras leis <em>escritas</em> de Roma, impedindo juízes patrícios de alterar as regras orais.
+            </div>
+            <div class="p-2 bg-emerald-50 rounded-lg">
+              <strong>3. Lei Canuleia (445 a.C.):</strong> Permitiu o casamento entre patrícios e plebeus.
+            </div>
+            <div class="p-2 bg-emerald-50 rounded-lg">
+              <strong>4. Lei Licínia (367 a.C.):</strong> Aboliu a escravidão por dívidas (para novos casos) e abriu o consulado a plebeus.
+            </div>
+            <div class="p-2 bg-emerald-50 rounded-lg">
+              <strong>5. Plebiscito (287 a.C. - Lei Hortênsia):</strong> As decisões votadas pela Assembleia da Plebe passaram a valer como lei para todos os romanos.
+            </div>
+          </div>
+        </div>
+
+        <!-- Consequências da Expansão e Guerras Púnicas -->
+        <div class="topic-card bg-white rounded-2xl p-5 border-2 border-amber-300 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-base font-bold text-amber-950">Expansão e Crise da República</h3>
+              <span class="badge bg-amber-500 text-slate-900">Guerras Púnicas</span>
+            </div>
+            <p class="text-xs text-slate-700 mb-3">
+              Ao vencer <strong>Cartago</strong> nas Guerras Púnicas pelo domínio do Mar Mediterrâneo (chamado de <em>Mare Nostrum</em>), Roma transformou-se:
+            </p>
+
+            <ul class="text-xs text-slate-700 space-y-2 mb-3">
+              <li>• <strong>Enxurrada de Escravos:</strong> Prisioneiros de guerra viraram mão de obra barata, tirando o trabalho dos camponeses livres.</li>
+              <li>• <strong>Latifúndios:</strong> Patrícios concentraram terras. Camponeses endividados migraram para as cidades (êxodo rural e desemprego).</li>
+              <li>• <strong>Homens Novos:</strong> Surgiram plebeus enriquecidos com comércio e cobrança de impostos.</li>
+              <li>• <strong>Política do Pão e Circo:</strong> Trigo e espetáculos gratuitos na arena para acalmar a massa desempregada e evitar revoltas.</li>
+            </ul>
+
+            <div class="p-2.5 bg-rose-50 rounded-xl text-xs text-rose-950 border border-rose-200">
+              <strong>Tentativas de Reforma:</strong>
+              <br>• <em>Tibério Graco (133 a.C.):</em> Propôs reforma agrária limitando terras; assassinado pelos patrícios.
+              <br>• <em>Caio Graco (123 a.C.):</em> Aprovou a Lei Frumentária (trigo mais barato para a plebe); também derrotado e morto.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 5: A CRISE FINAL DA REPÚBLICA & OS TRIUNVIRATOS -->
+    <!-- ======================================================== -->
+    <section id="sec-triunviratos" class="bg-white border-2 border-purple-200 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-purple-200">
+        <div class="w-12 h-12 rounded-2xl bg-purple-700 text-white flex items-center justify-center text-2xl shadow">
+          ⚔️
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-purple-700">Módulo 5</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-purple-950">A Queda da República: Generais, Triunviratos e Júlio César</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- 1. Mário, Sila e Espártaco -->
+        <div class="topic-card bg-purple-50/50 rounded-2xl p-5 border border-purple-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-purple-950 mb-2">1. Ditaduras e Revolta Escrava</h3>
+            <div class="space-y-2 text-xs text-slate-700">
+              <p>• <strong>General Mário:</strong> Criou o <em>soldo</em> (salário aos soldados) e prometeu terras a veteranos, profissionalizando o exército (os soldados tornaram-se fiéis ao general, não mais à República).</p>
+              <p>• <strong>General Sila:</strong> Apoiado pelo Senado, perseguiu adversários e tornou-se ditador perpétuo restaurando privilégios patrícios.</p>
+              <p>• <strong>Revolta de Espártaco (73-71 a.C.):</strong> Gladiador liderou mais de 60 mil escravizados contra as legiões romanas. Sufocado por Crasso e Pompeu; mais de 6 mil foram crucificados ao longo da Via Ápia.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Primeiro Triunvirato e Júlio César -->
+        <div class="topic-card bg-purple-50/50 rounded-2xl p-5 border border-purple-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-purple-950 mb-2">2. Júlio César & Primeiro Triunvirato</h3>
+            <p class="text-xs text-slate-600 mb-2">
+              Formado em 60 a.C. por <strong>Pompeu</strong> (Espanha), <strong>Crasso</strong> (Síria) e <strong>Júlio César</strong> (Gália).
+            </p>
+            <div class="space-y-1.5 text-xs text-slate-700">
+              <p>• Crasso morreu na Ásia em 53 a.C.</p>
+              <p>• César conquistou toda a Gália (venceu Vercingetórix) e ganhou imensa popularidade.</p>
+              <p>• O Senado apoiou Pompeu, mas César <em>cruzou o Rio Rubicão</em> ("a sorte está lançada!"), venceu Pompeu na Grécia e foi ao Egito, onde colocou Cleópatra no trono.</p>
+              <p>• César virou ditador vitalício, fez reformas populares, mas foi <strong>assassinado em 44 a.C. no Senado</strong> por patrícios temerosos da monarquia.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Segundo Triunvirato e Otávio Augusto -->
+        <div class="topic-card bg-purple-50/50 rounded-2xl p-5 border border-purple-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-purple-950 mb-2">3. O Nascimento do Império</h3>
+            <p class="text-xs text-slate-600 mb-2">
+              Segundo Triunvirato: <strong>Otávio</strong> (Ocidente), <strong>Marco Antônio</strong> (Oriente) e <strong>Lépido</strong> (África).
+            </p>
+            <div class="space-y-1.5 text-xs text-slate-700">
+              <p>• Lépido foi afastado. Marco Antônio aliou-se e apaixonou-se por Cleópatra no Egito.</p>
+              <p>• Otávio declarou guerra e venceu na <strong>Batalha de Ácio (31 a.C.)</strong>. O Egito tornou-se província romana.</p>
+              <p>• Em <strong>27 a.C.</strong>, Otávio recebeu do Senado o título divino de <strong>Augusto</strong>. Fim da República e início do <strong>Império Romano</strong>!</p>
+            </div>
+          </div>
+          <div class="mt-2 pt-2 border-t border-purple-200 text-[11px] text-purple-900 font-bold">
+            👑 De César vem os títulos futuros: Kaiser (Alemanha) e Czar (Rússia)!
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 6: IMPÉRIO ROMANO, COLISEU & CRISTIANISMO -->
+    <!-- ======================================================== -->
+    <section id="sec-imperio" class="bg-white border-2 border-rose-300 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-rose-200">
+        <div class="w-12 h-12 rounded-2xl bg-rose-700 text-white flex items-center justify-center text-2xl shadow">
+          👑
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-700">Módulo 6</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-rose-950">O Império Romano: Apogeu, Coliseu e o Cristianismo</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- 1. Governo de Otávio Augusto -->
+        <div class="topic-card bg-rose-50/50 rounded-2xl p-5 border border-rose-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-rose-950 mb-2">1. A Era de Augusto (27 a.C. - 14 d.C.)</h3>
+            <ul class="text-xs text-slate-700 space-y-2">
+              <li>• <strong>Pax Romana:</strong> Estabilizou as fronteiras e encerrou as guerras civis internas.</li>
+              <li>• <strong>Exército & Guarda Pretoriana:</strong> Tropa de elite exclusiva para proteção do imperador.</li>
+              <li>• <strong>Províncias:</strong> Divididas entre <em>senatoriais</em> (administradas pelo Senado) e <em>imperiais</em> (pelo imperador).</li>
+              <li>• <strong>Obras & Mecenato:</strong> Modernizou Roma em mármore. O nobre <em>Mecenas</em> financiava artistas e poetas (origem da palavra "mecenato").</li>
+            </ul>
+          </div>
+          <div class="mt-3 pt-2 border-t border-rose-200 text-[11px] text-rose-900 font-bold">
+            Apogeu: No governo de Trajano (ano 117), Roma atingiu a máxima extensão com 80.000 km de estradas!
+          </div>
+        </div>
+
+        <!-- 2. Como Funcionava o Coliseu -->
+        <div class="topic-card bg-rose-50/50 rounded-2xl p-5 border border-rose-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-rose-950">2. Estrutura do Coliseu</h3>
+              <span class="text-2xl">🏟️</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+              Iniciado por Vespasiano e concluído por Tito (Dinastia Flávia).
+            </p>
+
+            <!-- Desenho Corte Esquemático do Coliseu -->
+            <div class="bg-white rounded-xl p-3 mb-2 border border-rose-100 flex items-center justify-center">
+              <svg class="w-48 h-28" viewBox="0 0 190 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Velário (teto) -->
+                <path d="M20 20 Q95 5 170 20" stroke="#f43f5e" stroke-width="3" stroke-dasharray="4 2"/>
+                <text x="95" y="15" text-anchor="middle" font-size="6.5" font-weight="bold" fill="#be123c">Velário (Teto Retrátil de Linho)</text>
+                <!-- Paredes externas com Arcos -->
+                <rect x="20" y="20" width="150" height="40" fill="#f8fafc" stroke="#64748b" stroke-width="1.5" rx="3"/>
+                <circle cx="40" cy="40" r="8" fill="#e2e8f0"/>
+                <circle cx="70" cy="40" r="8" fill="#e2e8f0"/>
+                <circle cx="120" cy="40" r="8" fill="#e2e8f0"/>
+                <circle cx="150" cy="40" r="8" fill="#e2e8f0"/>
+                <!-- Arquibancadas em Degraus -->
+                <polygon points="30,60 55,40 55,60" fill="#cbd5e1"/>
+                <polygon points="160,60 135,40 135,60" fill="#cbd5e1"/>
+                <text x="40" y="55" font-size="6" fill="#475569">Plebeus</text>
+                <!-- Arena de combate central -->
+                <rect x="55" y="55" width="80" height="8" fill="#fde047" stroke="#ca8a04"/>
+                <text x="95" y="61" text-anchor="middle" font-size="6" font-weight="bold" fill="#854d0e">Arena (Piso com Areia)</text>
+                <!-- Hipogeu (subsolo) -->
+                <rect x="55" y="63" width="80" height="25" fill="#334155"/>
+                <line x1="75" y1="63" x2="75" y2="88" stroke="#64748b"/>
+                <line x1="95" y1="63" x2="95" y2="88" stroke="#64748b"/>
+                <line x1="115" y1="63" x2="115" y2="88" stroke="#64748b"/>
+                <text x="95" y="78" text-anchor="middle" font-size="6.5" font-weight="bold" fill="#f8fafc">Hipogeu: Jaulas e Elevadores</text>
+                <text x="95" y="102" text-anchor="middle" font-size="7" font-weight="bold" fill="#991b1b">Passagens Subterrâneas</text>
+              </svg>
+            </div>
+
+            <ul class="text-[11px] text-slate-700 space-y-1">
+              <li>• <strong>Velário:</strong> Toldo retrátil de linho contra sol e chuva.</li>
+              <li>• <strong>Arquibancada:</strong> Nobres sentavam perto; plebeus ficavam no topo.</li>
+              <li>• <strong>Hipogeu:</strong> Subsolo labiríntico com jaulas de feras e gladiadores.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. O Cristianismo em Roma -->
+        <div class="topic-card bg-rose-50/50 rounded-2xl p-5 border border-rose-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-rose-950">3. O Cristianismo</h3>
+              <span class="text-2xl">✝️</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+              Surgiu na Judeia durante o governo de Otávio Augusto com Jesus Cristo.
+            </p>
+            <div class="space-y-1.5 text-xs text-slate-700">
+              <p>• <strong>Por que foram perseguidos?</strong> Os cristãos negavam a divindade do imperador e rejeitavam o militarismo e a escravidão (alicerces de Roma). Reuniam-se escondidos nas <em>catacumbas</em>.</p>
+              <p>• <strong>Édito de Milão (313 d.C.):</strong> O imperador <strong>Constantino</strong> concedeu liberdade de culto a todas as religiões, proibindo perseguições aos cristãos.</p>
+              <p>• <strong>Édito de Tessalônica (391 d.C.):</strong> O imperador <strong>Teodósio</strong> tornou o Cristianismo a <em>religião oficial única</em> do Império, proibindo o paganismo.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 7: CRISE DO SÉCULO III, BÁRBAROS & REINO FRANCO -->
+    <!-- ======================================================== -->
+    <section id="sec-crise-barbaros" class="bg-white border-2 border-slate-300 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-slate-200">
+        <div class="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center text-2xl shadow">
+          🛡️
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Módulo 7</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-slate-950">A Crise, Invasões Germânicas (476 d.C.) e o Reino Franco</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- 1. A Crise do Escravismo e o Colonato -->
+        <div class="topic-card bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">1. O Efeito Dominó da Crise</h3>
+            <p class="text-xs text-slate-600 mb-3">
+              Com o fim das conquistas no Baixo Império (séc. III), a estrutura ruiu:
+            </p>
+
+            <div class="space-y-1.5 text-xs text-slate-700 bg-white p-3 rounded-xl border border-slate-200">
+              <p>1️⃣ <strong>Fim das Guerras</strong> ➔ Faltam novos prisioneiros.</p>
+              <p>2️⃣ <strong>Escassez de Escravos</strong> ➔ O preço do escravizado dispara.</p>
+              <p>3️⃣ <strong>Queda na Produção Rural</strong> ➔ Falta comida e os preços disparam (inflação).</p>
+              <p>4️⃣ <strong>Êxodo Urbano</strong> ➔ Pessoas fogem das cidades famintas para o campo.</p>
+              <p>5️⃣ <strong>Sistema de Colonato:</strong> Pobres trabalham nas terras dos ricos em troca de abrigo e comida (origem dos servos medievais!).</p>
+            </div>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-600">
+            Divisão em 395 por Teodósio: <em>Ocidente</em> (Roma) e <em>Oriente</em> (Constantinopla).
+          </div>
+        </div>
+
+        <!-- 2. Hunos e Invasões Bárbaras -->
+        <div class="topic-card bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">2. Hunos & Queda de Roma</h3>
+            <p class="text-xs text-slate-600 mb-2">
+              Para os romanos, "bárbaro" era quem vivia fora das fronteiras e não falava latim (<strong>etnocentrismo</strong>).
+            </p>
+            <div class="space-y-2 text-xs text-slate-700">
+              <p>• <strong>Átila, o Huno ("Flagelo de Deus"):</strong> Povo guerreiro das estepes que empurrou as tribos germânicas em direção a Roma.</p>
+              <p>• <strong>Contatos Iniciais:</strong> Muitos germânicos entraram pacificamente como agricultores e soldados nas fronteiras.</p>
+              <p>• <strong>Queda de Roma (476 d.C.):</strong> Odoacro, rei dos hérulos, destronou o último imperador romano do Ocidente, <strong>Rômulo Augusto</strong>. Fim da Idade Antiga e início da Idade Média!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. O Reino Franco e Carlos Martel -->
+        <div class="topic-card bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">3. O Poderoso Reino Franco</h3>
+            <p class="text-xs text-slate-600 mb-2">
+              O mais duradouro reino germânico formado na Europa:
+            </p>
+            <div class="space-y-1.5 text-xs text-slate-700">
+              <p>• <strong>Clóvis (496 d.C.):</strong> Unificou os francos e converteu-se ao cristianismo com 3 mil guerreiros em Reims, selando aliança vital com a Igreja Católica.</p>
+              <p>• <strong>Reis Indolentes:</strong> Sucessores fracos; o poder de fato passou para os <em>Prefeitos do Paço</em> (mordomos).</p>
+              <p>• <strong>Carlos Martel e a Batalha de Poitiers (732 d.C.):</strong> Barrou o avanço dos exércitos muçulmanos nos Pirineus, salvando a Europa cristã.</p>
+              <p>• <strong>Pepino, o Breve (751 d.C.):</strong> Tornou-se rei (dinastia carolíngia), venceu os lombardos e doou terras à Igreja (o <em>Patrimônio de São Pedro</em>).</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 8: SIMULADO RÁPIDO & DICAS DE PROVA -->
+    <!-- ======================================================== -->
+    <section id="sec-simulado" class="bg-gradient-to-br from-amber-100 to-rose-100 border-2 border-amber-300 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-amber-300">
+        <div class="w-12 h-12 rounded-2xl bg-rose-600 text-white flex items-center justify-center text-2xl shadow">
+          🎯
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-800">Revisão Rápida</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-slate-950">As 6 Pegadinhas Mais Frequentes em Provas</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+          <div class="flex justify-between items-center text-xs font-bold text-rose-600 mb-1">
+            <span>PEGADINHA #1</span>
+            <span>Macedônia & Helenismo</span>
+          </div>
+          <p class="font-bold text-slate-800 text-sm mb-1">
+            ❓ O que é Cultura Helenística e como ela surgiu?
+          </p>
+          <p class="text-xs text-slate-700 bg-amber-50 p-2 rounded-lg">
+            💡 É a <strong>fusão da cultura grega com as culturas orientais</strong> (egípcia e persa), impulsionada pelas conquistas de Alexandre, casamentos mistos e cidades como Alexandria.
+          </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+          <div class="flex justify-between items-center text-xs font-bold text-rose-600 mb-1">
+            <span>PEGADINHA #2</span>
+            <span>Sociedade Romana</span>
+          </div>
+          <p class="font-bold text-slate-800 text-sm mb-1">
+            ❓ Qual a diferença básica entre Patrícios e Plebeus na Monarquia?
+          </p>
+          <p class="text-xs text-slate-700 bg-emerald-50 p-2 rounded-lg">
+            💡 <strong>Patrícios:</strong> Donos de terra com todos os direitos políticos. <br>
+            💡 <strong>Plebeus:</strong> Maioria trabalhadora (comerciantes/camponeses) que pagava impostos, mas <em>não tinha direitos políticos</em>!
+          </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+          <div class="flex justify-between items-center text-xs font-bold text-rose-600 mb-1">
+            <span>PEGADINHA #3</span>
+            <span>Leis Romanas</span>
+          </div>
+          <p class="font-bold text-slate-800 text-sm mb-1">
+            ❓ O que eram a Lei das Doze Tábuas e a Lei Canuleia?
+          </p>
+          <p class="text-xs text-slate-700 bg-indigo-50 p-2 rounded-lg">
+            💡 <strong>Doze Tábuas:</strong> Primeiras leis <em>escritas</em> (acabou com a manipulação das leis orais). <br>
+            💡 <strong>Canuleia:</strong> Autorizou o casamento entre patrícios e plebeus.
+          </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+          <div class="flex justify-between items-center text-xs font-bold text-rose-600 mb-1">
+            <span>PEGADINHA #4</span>
+            <span>Crise do Escravismo</span>
+          </div>
+          <p class="font-bold text-slate-800 text-sm mb-1">
+            ❓ Por que o fim das conquistas provocou a crise de Roma?
+          </p>
+          <p class="text-xs text-slate-700 bg-rose-50 p-2 rounded-lg">
+            💡 Sem guerras, acabaram os prisioneiros ➔ faltaram escravos ➔ caiu a produção no campo ➔ causou fome, inflação e êxodo urbano para o <strong>colonato</strong>.
+          </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+          <div class="flex justify-between items-center text-xs font-bold text-rose-600 mb-1">
+            <span>PEGADINHA #5</span>
+            <span>Cristianismo em Roma</span>
+          </div>
+          <p class="font-bold text-slate-800 text-sm mb-1">
+            ❓ Qual a diferença entre o Édito de Milão e o de Tessalônica?
+          </p>
+          <p class="text-xs text-slate-700 bg-sky-50 p-2 rounded-lg">
+            💡 <strong>Édito de Milão (313 - Constantino):</strong> Deu <em>liberdade de culto</em> (fim da perseguição). <br>
+            💡 <strong>Teodósio (391):</strong> Tornou o Cristianismo a <em>religião oficial exclusiva</em> do Império.
+          </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+          <div class="flex justify-between items-center text-xs font-bold text-rose-600 mb-1">
+            <span>PEGADINHA #6</span>
+            <span>Batalha de Poitiers</span>
+          </div>
+          <p class="font-bold text-slate-800 text-sm mb-1">
+            ❓ Qual a importância histórica de Carlos Martel em 732 d.C.?
+          </p>
+          <p class="text-xs text-slate-700 bg-purple-50 p-2 rounded-lg">
+            💡 Ele impediu o avanço dos muçulmanos para além dos Pirineus na <strong>Batalha de Poitiers</strong>, mantendo a Europa sob influência cristã.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function showSection(id) {
+      const allSections = [
+        'sec-macedonia', 'sec-helenismo', 'sec-origens-roma', 
+        'sec-republica', 'sec-triunviratos', 'sec-imperio', 
+        'sec-crise-barbaros', 'sec-simulado'
+      ];
+      const buttons = document.querySelectorAll('.nav-btn');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-amber-400', 'text-slate-900');
+        btn.classList.add('bg-amber-950/70', 'text-amber-200');
+      });
+
+      if (id === 'all') {
+        allSections.forEach(s => document.getElementById(s).classList.remove('hidden'));
+        document.getElementById('btn-all').classList.add('bg-amber-400', 'text-slate-900');
+      } else {
+        allSections.forEach(s => document.getElementById(s).classList.add('hidden'));
+
+        if (id === 'macedonia') {
+          document.getElementById('sec-macedonia').classList.remove('hidden');
+          document.getElementById('btn-macedonia').classList.add('bg-amber-400', 'text-slate-900');
+        } else if (id === 'helenismo') {
+          document.getElementById('sec-helenismo').classList.remove('hidden');
+          document.getElementById('btn-helenismo').classList.add('bg-amber-400', 'text-slate-900');
+        } else if (id === 'origens-roma') {
+          document.getElementById('sec-origens-roma').classList.remove('hidden');
+          document.getElementById('btn-origens-roma').classList.add('bg-amber-400', 'text-slate-900');
+        } else if (id === 'republica') {
+          document.getElementById('sec-republica').classList.remove('hidden');
+          document.getElementById('sec-triunviratos').classList.remove('hidden');
+          document.getElementById('btn-republica').classList.add('bg-amber-400', 'text-slate-900');
+        } else if (id === 'imperio') {
+          document.getElementById('sec-imperio').classList.remove('hidden');
+          document.getElementById('btn-imperio').classList.add('bg-amber-400', 'text-slate-900');
+        } else if (id === 'crise-barbaros') {
+          document.getElementById('sec-crise-barbaros').classList.remove('hidden');
+          document.getElementById('btn-crise-barbaros').classList.add('bg-amber-400', 'text-slate-900');
+        } else if (id === 'simulado') {
+          document.getElementById('sec-simulado').classList.remove('hidden');
+          document.getElementById('btn-simulado').classList.add('bg-amber-400', 'text-slate-900');
+        }
+      }
+    }
+  </script>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- CONTROLADOR PRINCIPAL JAVASCRIPT DO PORTAL              -->
+  <!-- ======================================================== -->
+  <script>
+    function switchReview(target) {
+      const vHub = document.getElementById('view-hub');
+      const vGeo = document.getElementById('view-geo');
+      const vHist = document.getElementById('view-hist');
+
+      const btnHub = document.getElementById('nav-hub');
+      const btnGeo = document.getElementById('nav-geo');
+      const btnHist = document.getElementById('nav-hist');
+
+      // Reset Active Button Styles
+      [btnHub, btnGeo, btnHist].forEach(b => {
+        b.classList.remove('ring-2', 'ring-white', 'ring-offset-2', 'ring-offset-slate-900', 'font-black');
+      });
+
+      // Esconder todas as visualizações
+      vHub.classList.add('hidden');
+      vGeo.classList.add('hidden');
+      vHist.classList.add('hidden');
+
+      if (target === 'geo') {
+        vGeo.classList.remove('hidden');
+        btnGeo.classList.add('ring-2', 'ring-white', 'ring-offset-2', 'ring-offset-slate-900', 'font-black');
+        window.location.hash = 'geografia';
+      } else if (target === 'hist') {
+        vHist.classList.remove('hidden');
+        btnHist.classList.add('ring-2', 'ring-white', 'ring-offset-2', 'ring-offset-slate-900', 'font-black');
+        window.location.hash = 'historia';
+      } else {
+        vHub.classList.remove('hidden');
+        btnHub.classList.add('ring-2', 'ring-white', 'ring-offset-2', 'ring-offset-slate-900', 'font-black');
+        history.replaceState(null, null, ' ');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Checar Hash da URL ao carregar (ex: #geografia ou #historia)
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash.includes('geo')) {
+        switchReview('geo');
+      } else if (hash.includes('hist')) {
+        switchReview('hist');
+      } else {
+        switchReview('hub');
+      }
+    });
+  </script>
+
+</body>
+</html>
